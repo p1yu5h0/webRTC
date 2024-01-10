@@ -1,8 +1,22 @@
-const {Server} = require("socket.io")
+const { Server } = require('socket.io');
+const express = require('express');
+const cors = require('cors');
+const http = require('http');
+const dotenv = require('dotenv');
 
-const io = new Server(8000, {
-    cors: true,
-})
+dotenv.config();
+
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+    cors: true
+});
+
+app.use(cors());
+
+app.get("/", (req, res) => {
+    res.send("Hello World");
+});
 
 const emailToSocketIdMap = new Map();
 const socketIdtoEmailMap = new Map();
@@ -45,3 +59,5 @@ io.on("connection", (socket) => {
         })
     })
 })
+
+server.listen(process.env.PORT, () => console.log(`Server has started.`));
