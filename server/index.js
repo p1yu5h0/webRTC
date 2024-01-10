@@ -1,13 +1,13 @@
-import { Server } from 'socket.io';
-import express from 'express';
-import cors from 'cors';
-import { createServer } from 'http';
-import { config } from 'dotenv';
+const { Server } = require('socket.io');
+const express = require('express');
+const cors = require('cors');
+const http = require('http');
+const dotenv = require('dotenv');
 
-config();
+dotenv.config();
 
 const app = express();
-const server = createServer(app);
+const server = http.createServer(app);
 const io = new Server(server, {
     cors: true
 });
